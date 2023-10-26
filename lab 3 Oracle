@@ -1,0 +1,44 @@
+-- Tạo bảng SinhVien
+CREATE TABLE SinhVien (
+    ID NUMBER,
+    Ho NVARCHAR2(50),
+    Ten NVARCHAR2(50),
+    MaSinhVien VARCHAR2(20)
+);
+
+-- Thêm dữ liệu mẫu vào bảng SinhVien
+INSERT INTO SinhVien (ID, Ho, Ten, MaSinhVien)
+VALUES (1, 'Nguyễn', 'Văn', 'SV001');
+
+INSERT INTO SinhVien (ID, Ho, Ten, MaSinhVien)
+VALUES (2, 'Trần', 'Thị', 'SV002');
+
+INSERT INTO SinhVien (ID, Ho, Ten, MaSinhVien)
+VALUES (3, 'Lê', 'Hồng', 'SV003');
+
+-- Kiểm tra dữ liệu trong bảng SinhVien
+SELECT * FROM SinhVien;
+
+
+
+
+-- Tạo bảng KhoaHoc
+CREATE TABLE KhoaHoc (
+    MaMonHoc VARCHAR2(20) PRIMARY KEY,
+    TenMonHoc NVARCHAR2(100),
+    MaSinhVien VARCHAR2(20),
+    FOREIGN KEY (MaSinhVien) REFERENCES SinhVien(MaSinhVien)
+);
+
+-- Thêm dữ liệu mẫu vào bảng KhoaHoc
+INSERT INTO KhoaHoc (MaMonHoc, TenMonHoc, MaSinhVien)
+VALUES ('MH001', 'Toán cơ bản', 'SV001');
+
+INSERT INTO KhoaHoc (MaMonHoc, TenMonHoc, MaSinhVien)
+VALUES ('MH002', 'Vật lý cơ bản', 'SV002');
+
+INSERT INTO KhoaHoc (MaMonHoc, TenMonHoc, MaSinhVien)
+VALUES ('MH003', 'Hóa học cơ bản', 'SV003');
+
+-- Kiểm tra dữ liệu trong bảng KhoaHoc
+SELECT * FROM KhoaHoc;
