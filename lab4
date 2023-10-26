@@ -1,1 +1,34 @@
+# them thu vien can thiet vao
 
+import findspark
+findspark.init()
+import pyspark
+from IPython.display import display, clear_output
+from pyspark.sql import SparkSession
+from pyspark.sql import functions as f
+import pandas as pd
+from pyspark.sql.functions import explode
+from pyspark.sql.functions import split
+
+
+spark = SparkSession.builder.appName('SparkStreaming').getOrCreate()
+
+# tao lines
+lines = spark.readStream.format("socket").option("host","localhost").option("port", 9999).load()
+
+
+# tao word
+words = lines.select(explode(split(lines.value, " ")).alias("word"))
+
+#tao wordcount
+wordCounts = words.groupBy("word").count()
+
+#tao query
+query = wordCounts.writeStream.outputMode("complete").format("console").start()
+
+
+
+query.awaitTermination()
+
+# ket noi cong 9999
+nc -lk 9999
